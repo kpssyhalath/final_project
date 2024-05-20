@@ -44,7 +44,7 @@ class Page(Base):
     __tablename__ = 'page'
 
     page_id = Column(Integer, primary_key=True, autoincrement=True)
-    html = Column(Text)
+    path = Column(Text)
 
 
 class Permission(Base):
@@ -106,7 +106,7 @@ class Template(Base):
     temp_html = Column(Text)
 
 
-t_grouptarget = Table(                                          #!!!
+t_grouptarget = Table(                                       
     'grouptarget', metadata,
     Column('groupid', ForeignKey('groups.id')),
     Column('targetid', ForeignKey('target.id'))
@@ -126,3 +126,18 @@ class User(Base):
 
 
 #Don't have Role_permission in ER
+
+    # Add new
+# t_rolepermission = Table(                                          
+#     'grouptarget', metadata,
+#     Column('roleid', ForeignKey('role.role_id')),
+#     Column('permid', ForeignKey('permission.perm_id'))
+# )
+
+
+    # change html to path
+# class Page(Base):
+#     __tablename__ = 'page'
+
+#     page_id = Column(Integer, primary_key=True, autoincrement=True)
+#     path = Column(Text)

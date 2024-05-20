@@ -210,6 +210,12 @@ class UserManagement(Resource):
 
         db_user = db.session.query(User).filter_by(id=id).first()
 
+        db_usr = db.session.query(User).filter(User.email == email, User.id != id).first()
+        if db_usr:
+            return make_response(
+                jsonify({"msg": "Email already taken"}), HTTP_409_CONFLICT
+            )
+            
         # Validate
         validatePass = validatePasswordChange(
             currentHash=db_user.password,

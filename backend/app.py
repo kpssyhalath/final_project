@@ -14,7 +14,8 @@ from api.auth import auth_ns
 from api.users import user_ns
 from api.sending_profile import sending_prolfile_ns
 from api.group import group_ns
-
+from api.email_template import email_template_ns
+from api.landing_page import landing_page_ns
 
 def create_app(config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -45,7 +46,8 @@ def create_app(config=None):
     api.add_namespace(user_ns)
     api.add_namespace(sending_prolfile_ns)
     api.add_namespace(group_ns)
-    
+    api.add_namespace(email_template_ns)
+    api.add_namespace(landing_page_ns)
         
 
     #app shell
