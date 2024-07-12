@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 flask-restx = "*"
 python-dotenv = "*"
+dnspython = "*"
+openpyxl = "*"
 
 [dev-packages]
 

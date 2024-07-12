@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -13,14 +13,16 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import PersonIcon from "@mui/icons-material/Person";
 import { NavLink, useLocation } from "react-router-dom";
-import Logo from "../assets/Logo/CEIT_hor.png";
-import { UserOutlined  } from '@ant-design/icons';
+import Logo from "@/assets/Logo/Cyberus_hor.png";
+import { UserOutlined } from '@ant-design/icons';
+import { jwtDecode } from "jwt-decode";
 
 const { Header, Sider, Content } = Layout;
 
 export default function DashboardLayout({ children }) {
+  const accessToken = localStorage.getItem('access_token') || ''
+  const decodedToken = accessToken ? jwtDecode(accessToken) : null;
   const navigate = useNavigate();
 
   const handleProfileAllClick = () => {
@@ -28,12 +30,17 @@ export default function DashboardLayout({ children }) {
   };
 
   const handleLogoutClick = () => {
-    navigate("/login");
+    localStorage.clear();
+    setTimeout(() => {
+      navigate("/login");
+    }, 500);
   };
+
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = document.documentElement.scrollTop;
@@ -48,11 +55,18 @@ export default function DashboardLayout({ children }) {
   }, []);
 
   const { pathname } = useLocation();
-
   const [hasShadow, setHasShadow] = useState(false);
 
   return (
     <Layout className="main-layout">
+      {/* Check if the user is authenticated and has the 'admin' role */}
+      {!decodedToken ? (
+        // If the token is not present, navigate to the login page
+        <Navigate to="/login" />
+      ) : (
+        // If the user is authenticated but does not have the 'admin' role, navigate to the user dashboard
+        decodedToken?.role !== "admin" && <Navigate to="/u/dashboard" />
+      )}
       <Sider
         trigger={null}
         collapsible
@@ -68,13 +82,13 @@ export default function DashboardLayout({ children }) {
         }}
       >
         <div className="nav-logo">
-          <img src={Logo} alt="logo" />
+          <img src={Logo} alt="logo" draggable="false" />
         </div>
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={[pathname]}
-          items={[
+          items={decodedToken && decodedToken?.role === 'admin' && ([
             {
               key: "/dashboard",
               icon: <DashboardOutlined />,
@@ -110,7 +124,7 @@ export default function DashboardLayout({ children }) {
               icon: <SettingOutlined />,
               label: <NavLink to="/user-management">User Management</NavLink>,
             },
-          ]}
+          ])}
         />
       </Sider>
       <Layout>
@@ -146,16 +160,15 @@ export default function DashboardLayout({ children }) {
               icon={<UserOutlined />}
               style={{
                 fontSize: "16px",
-
                 height: 40,
                 marginRight: -1,
               }}
               onClick={handleProfileAllClick}
             >
-              admin@gmail.com
+              {decodedToken.user_email}
             </Button>
-            </div>
-            <div style={{ position: "fixed" ,top:4.5, right: 15 }}>
+          </div>
+          <div style={{ position: "fixed", top: 4.5, right: 15 }}>
             <Button
               type="primary"
               icon={<LogoutOutlinedIcon />}
@@ -163,7 +176,7 @@ export default function DashboardLayout({ children }) {
                 fontSize: "16px",
                 width: 70,
                 height: 40,
-                backgroundColor: "rgb(0,22,40)",
+                backgroundColor: "rgb(0,21,40)",
                 color: "#FFF",
               }}
               onClick={handleLogoutClick}
@@ -172,7 +185,7 @@ export default function DashboardLayout({ children }) {
         </Header>
         <Content
           style={{
-            margin: "24px 16px",
+            margin: "20px 16px",
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,
@@ -183,7 +196,7 @@ export default function DashboardLayout({ children }) {
             style={{
               flex: 1,
               overflowY: "auto",
-              padding: "90px 16px",
+              padding: "40px 16px",
               borderRadius: borderRadiusLG,
             }}
           >

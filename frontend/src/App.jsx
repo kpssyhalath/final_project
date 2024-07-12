@@ -13,6 +13,9 @@ import LoginPage from "@/pages/LoginPage";
 import UDashboardPage from "@/pages/uPages/UDashboardPage";
 import UCampaignsPage from "@/pages/uPages/UCampaignsPage";
 import URCampaignsPage from "@/pages/uPages/URCampaignsPage";
+import UUserManagementPage from "@/pages/uPages/UUserManagementPage";
+
+
 
 import "./App.css";
 
@@ -68,8 +71,22 @@ const router = createBrowserRouter([
   {
     path: "/u/campaigns/id",
     element: <URCampaignsPage />
+  },
+  {
+    path: "/u/campaigns/result/:cam_id",
+    element: <URCampaignsPage />
+  },
+  {
+    path: "/campaigns/result/:cam_id",
+    element: <RCampaignsPage />
+  },
+  {
+    path: "/u/user-management",
+    element: <UUserManagementPage />
   }
 ]);
+
+
 
 export default function App() {
   return (

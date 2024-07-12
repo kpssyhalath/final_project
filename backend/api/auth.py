@@ -39,24 +39,26 @@ class LoginResource(Resource):
         password = data.get('password')
 
         if not validate_email(email):
-            return make_response(jsonify({"message":"Invalid email address"}), HTTP_400_BAD_REQUEST)
+            return make_response(jsonify({"msg":"Invalid email address"}), HTTP_400_BAD_REQUEST)
 
         db_auth = db.session.query(User).filter_by(email=email).first()           
 
         if not db_auth:
-            return make_response(jsonify({"message":"Invalid email/password"}), HTTP_400_BAD_REQUEST) 
+            return make_response(jsonify({"msg":"Invalid email/password"}), HTTP_400_BAD_REQUEST) 
 
         isPasswordCorrect = check_password_hash(db_auth.password, password)
         if not isPasswordCorrect:
-            return make_response(jsonify({"message":"Invalid email/password"}), HTTP_400_BAD_REQUEST)
-
-
-        role = "admin" if db_auth.role_id == 1 else "user"
+            return make_response(jsonify({"msg":"Invalid email/password"}), HTTP_400_BAD_REQUEST)
+        user_email = db_auth.email
+        role_permissions = db_auth.role.permissions
+        permissions = [perm.perm_name for perm in role_permissions]
+        user_id = db_auth.id
+        role = db_auth.role.role_name
         
-        access_token = create_access_token(identity = db_auth.id, additional_claims = {'role': role})
-        refresh_token = create_refresh_token(identity = db_auth.id, additional_claims={'role': role})
+        access_token = create_access_token(identity = db_auth.id, additional_claims = {'user_id':user_id ,'user_email':user_email ,'role': role, 'permissions': permissions})
+        refresh_token = create_refresh_token(identity = db_auth.id, additional_claims = {'user_id':user_id ,'user_email':user_email, 'role': role, 'permissions': permissions})
         
-        return make_response(jsonify({"access_token":access_token,"refresh_token":refresh_token,"email":db_auth.email}), HTTP_200_OK)
+        return make_response(jsonify({"access_token":access_token,"refresh_token":refresh_token}), HTTP_200_OK)
             
 
 
@@ -70,9 +72,13 @@ class RefreshResource(Resource):
 
             current_token = get_jwt()
             role = current_token['role']
+            permissions = current_token['permissions']
+            user_id = current_token['user_id']
+            user_email = current_token['user_email']
+            
 
-            new_access_token = create_access_token(identity = current_user, additional_claims={'role': role})
-            new_refresh_token = create_refresh_token(identity = current_user, additional_claims={'role': role})
+            new_access_token = create_access_token(identity = current_user, additional_claims = {'user_id':user_id ,'user_email':user_email, 'role': role, 'permissions':permissions})
+            new_refresh_token = create_refresh_token(identity = current_user, additional_claims = {'user_id':user_id ,'user_email':user_email, 'role': role, 'permissions':permissions})
 
             return make_response(jsonify({"access_token": new_access_token, "refresh_token":new_refresh_token}), HTTP_200_OK)
         except Exception as e:

@@ -1,5 +1,6 @@
 import random
 import re
+from datetime import datetime
 from flask import request, jsonify, make_response
 from flask_restx import Resource, fields, Namespace
 from flask_jwt_extended import get_jwt, jwt_required
@@ -59,6 +60,19 @@ def validate_strip(profile_name, name):
             jsonify({"msg": f"No {name} provided"}), HTTP_400_BAD_REQUEST
         )
 
+def validate_host(host):
+    pattern = r'^smtp\.example\.com:(587|25)$'
+    if re.match(pattern, host):
+        return True
+    
+    # Check if host includes common email providers
+    common_providers = ['gmail', 'live', 'office365']
+    for provider in common_providers:
+        if provider in host:
+            return True
+    
+    return False
+
 
 @sending_prolfile_ns.route("/")
 class SmtpManagments(Resource):
@@ -67,9 +81,9 @@ class SmtpManagments(Resource):
     @sending_prolfile_ns.expect(sending_prolfile_model)
     def post(self):
         # protect admin permisstion
-        permission_check = check_admin_permission()
-        if permission_check:
-            return permission_check
+        # permission_check = check_admin_permission()
+        # if permission_check:
+        #     return permission_check
 
         data = request.get_json()
         profile_name = data.get("profile_name")
@@ -87,9 +101,9 @@ class SmtpManagments(Resource):
         if validate_from:
             return validate_from
 
-        validate_host = validate_strip(host, "host")
-        if validate_host:
-            return validate_host
+        validate_host_em = validate_strip(host, "host")
+        if validate_host_em:
+            return validate_host_em
 
         validate_username = validate_strip(username, "username")
         if validate_username:
@@ -98,6 +112,12 @@ class SmtpManagments(Resource):
         validate_password = validate_strip(password, "password")
         if validate_password:
             return validate_password
+        
+        validate_host_valid = validate_host(host)
+        if not validate_host_valid:
+            return make_response(
+                jsonify({"msg": "Invalid host smtp address"}), HTTP_400_BAD_REQUEST
+            )
 
         # validate format
         if not validate_email(from_address):
@@ -114,7 +134,7 @@ class SmtpManagments(Resource):
             return make_response(
                 jsonify({"msg": "Invalid username email address"}), HTTP_400_BAD_REQUEST
             )
-
+        
         profile_id = random.randint(100, 10000)
 
         db_smtp_profile = db.session.query(Smtp).filter_by(name=profile_name).first()
@@ -146,13 +166,17 @@ class SmtpManagments(Resource):
     #Get all profiles
     @jwt_required()
     def get(self):
-        permission_check = check_admin_permission()
-        if permission_check:
-            return permission_check
+        # permission_check = check_admin_permission()
+        # if permission_check:
+        #     return permission_check
 
         db_smtp_profiles = db.session.query(Smtp).all()
         data = []
         for profiles in db_smtp_profiles:
+            if profiles.modified_date:
+                modified_date = profiles.modified_date.strftime('%Y-%m-%d')
+            else:
+                modified_date = None   
             data.append(
                 {
                     "id": profiles.smtp_id,
@@ -161,6 +185,7 @@ class SmtpManagments(Resource):
                     "host": profiles.host,
                     "username": profiles.username,
                     "password": profiles.password,
+                    "modified_date": modified_date,
                 }
             )
         
@@ -174,9 +199,9 @@ class SmtpManagment(Resource):
     @sending_prolfile_ns.expect(sending_prolfile_model)
     
     def delete(self, id):
-        permission_check = check_admin_permission()
-        if permission_check:
-            return permission_check
+        # permission_check = check_admin_permission()
+        # if permission_check:
+        #     return permission_check
         
         db_smtp_profile = db.session.query(Smtp).filter_by(smtp_id=id).first()
         
@@ -195,30 +220,59 @@ class SmtpManagment(Resource):
     #Update smtp profile
     @jwt_required()
     def put(self,id):
-        permission_check = check_admin_permission()
-        if permission_check:
-            return permission_check
+        # permission_check = check_admin_permission()
+        # if permission_check:
+        #     return permission_check
         
         data = request.get_json()
         
-        profile_name = data.get("profile_name")
+        pro_name = data.get("profile_name")
         from_address = data.get("from_address")
         host = data.get("host")
         username = data.get("username")
         password = data.get("password")
         
         # validate empty fields
-        validate_name = validate_strip(profile_name, "profile name")
+        validate_name = validate_strip(pro_name, "profile name")
         if validate_name:
             return validate_name
+        
+        validate_host_valid = validate_host(host)
+        if not validate_host_valid:
+            return make_response(
+                jsonify({"msg": "Invalid host smtp address"}), HTTP_400_BAD_REQUEST
+            )
 
+        if from_address.strip() == "" and host.strip() == "" and username.strip() == "" and password.strip() == "":
+            db_profile = (
+                db.session.query(Smtp).filter(Smtp.name == pro_name, Smtp.smtp_id != id).first()
+            )
+            if db_profile:
+                return make_response(
+                    jsonify({"msg": "Profile name already taken"}), HTTP_409_CONFLICT
+                )
+                
+            current_datetime = datetime.now()
+                
+            db_pro = db.session.query(Smtp).filter_by(smtp_id = id).first()
+            if not db_pro:
+                return make_response(
+                    jsonify({"msg": "Sending Profile not found"}), HTTP_404_NOT_FOUND
+                )
+                
+            db_pro.name = pro_name
+            db_pro.modified_date = current_datetime
+            db.session.commit()
+            return make_response(jsonify({"msg": "Profile Updated"}), HTTP_200_OK)
+        
+        
         validate_from = validate_strip(from_address, "from email address")
         if validate_from:
             return validate_from
 
-        validate_host = validate_strip(host, "host")
-        if validate_host:
-            return validate_host
+        validate_host_em = validate_strip(host, "host")
+        if validate_host_em:
+            return validate_host_em
 
         validate_username = validate_strip(username, "username")
         if validate_username:
@@ -244,10 +298,15 @@ class SmtpManagment(Resource):
                 jsonify({"msg": "Invalid username email address"}), HTTP_400_BAD_REQUEST
             )
         
-        db_smtp_profile = db.session.query(Smtp).filter_by(smtp_id=id).first()
-
-
-        if db_smtp_profile.name == profile_name :
+        db_smtp_profile = db.session.query(Smtp).filter_by(smtp_id = id).first()
+        if not db_smtp_profile:
+            return make_response(
+                jsonify({"msg": "Sending Profile not found"}), HTTP_404_NOT_FOUND
+            )
+        db_usr = (
+                db.session.query(Smtp).filter(Smtp.name == pro_name, Smtp.smtp_id != id).first()
+            )
+        if db_usr :
             return make_response(
                 jsonify({"msg": "Profile name already taken"}), HTTP_409_CONFLICT
             )
@@ -256,12 +315,14 @@ class SmtpManagment(Resource):
             return make_response(
                 jsonify({"msg": "Sending Profile not found"}), HTTP_404_NOT_FOUND
             )
+        current_datetime = datetime.now()
         
-        db_smtp_profile.name = profile_name
+        db_smtp_profile.name = pro_name
         db_smtp_profile.from_address = from_address
         db_smtp_profile.host = host
         db_smtp_profile.username = username
         db_smtp_profile.password =  password
+        db_smtp_profile.modified_date = current_datetime
         
         db.session.commit()
         
@@ -270,3 +331,37 @@ class SmtpManagment(Resource):
         )
             
         
+        
+    @jwt_required()
+    def get(self,id):
+        # permission_check = check_admin_permission()
+        # if permission_check:
+
+
+        db_smtp_profiles = db.session.query(Smtp).filter_by(smtp_id = id).first()
+        data = []
+        
+        if not db_smtp_profiles:
+            return make_response(
+                jsonify({"msg": "Sending Profile not found"}), HTTP_404_NOT_FOUND
+            )
+            
+        if db_smtp_profiles.modified_date:
+            modified_date = db_smtp_profiles.modified_date.strftime('%Y-%m-%d')
+        else:
+            modified_date = None     
+        
+        data.append(
+            {
+                "id": db_smtp_profiles.smtp_id,
+                "profile_name": db_smtp_profiles.name,
+                "from_address": db_smtp_profiles.from_address,
+                "host": db_smtp_profiles.host,
+                "username": db_smtp_profiles.username,
+                "password":  db_smtp_profiles.password,
+                "modified_date": modified_date
+            })
+            
+        return make_response(
+            jsonify({"sending_profile": data}), HTTP_200_OK
+        )

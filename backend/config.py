@@ -14,8 +14,8 @@ class DevConfig(Config):
     SQLALCHEMY_ECHO = True
     # BEBUG = True
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)    
-    JWT_REFRESH_TOKEN_EXPIRES = timedelta(hours=2)
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=5)    
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(hours=24)
     
     
 class ProdConfig(Config):
