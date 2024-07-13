@@ -413,12 +413,12 @@ export default function EnhancedTable() {
     event.preventDefault();
 
     try {
-      const response = await axiosPrivate.put(
+      const response = await axios.put(
         `email_template/${selectedID}`,
         formData,
         {
           headers: {
-            Authorization: `Bearer ${JSON.parse(access_token)}`,
+            Authorization: `Bearer ${(access_token)}`,
           },
         }
       );
@@ -468,11 +468,11 @@ export default function EnhancedTable() {
 
   const handleDelete = async () => {
     try {
-      const response = await axiosPrivate.delete(
+      const response = await axios.delete(
         `email_template/${selectedID}`,
         {
           headers: {
-            Authorization: `Bearer ${JSON.parse(access_token)}`,
+            Authorization: `Bearer ${(access_token)}`,
           },
         }
       );

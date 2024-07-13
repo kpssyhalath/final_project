@@ -90,7 +90,7 @@ export default function LoginPage() {
           )}
 
           <div>
-            {/* Email input field */}
+            Email input field
             <TextField
               className="login-textfield"
               label="Email"

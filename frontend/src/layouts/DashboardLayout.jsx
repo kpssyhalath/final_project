@@ -165,7 +165,7 @@ export default function DashboardLayout({ children }) {
               }}
               onClick={handleProfileAllClick}
             >
-              {decodedToken.user_email}
+              {/* {decodedToken.user_email} */}
             </Button>
           </div>
           <div style={{ position: "fixed", top: 4.5, right: 15 }}>

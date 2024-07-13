@@ -412,12 +412,12 @@ export default function EnhancedTable() {
     event.preventDefault();
 
     try {
-      const response = await axiosPrivate.put(
+      const response = await axios.put(
         `landing_page/${selectedID}`,
         formData,
         {
           headers: {
-            Authorization: `Bearer ${JSON.parse(access_token)}`,
+            Authorization: `Bearer ${(access_token)}`,
           },
         }
       );
@@ -468,9 +468,9 @@ export default function EnhancedTable() {
 
   const handleDelete = async () => {
     try {
-      const response = await axiosPrivate.delete(`landing_page/${selectedID}`, {
+      const response = await axios.delete(`landing_page/${selectedID}`, {
         headers: {
-          Authorization: `Bearer ${JSON.parse(access_token)}`,
+          Authorization: `Bearer ${(access_token)}`,
         },
       });
       if (response) {
